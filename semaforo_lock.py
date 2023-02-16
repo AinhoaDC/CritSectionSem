@@ -10,20 +10,22 @@ from multiprocessing import Process
 from multiprocessing import current_process
 from multiprocessing import Value, Array
 from multiprocessing import Semaphore, Lock
+import time 
+import random 
 N = 8
 def task(common, tid,  semaforo):
-    a = 0
     for i in range(100):
-        print(f'{tid}−{i}: Non−critical Section')
-        a += 1
-        print(f'{tid}−{i}: End of non−critical Section')
+        print(f'{tid}−{i}: Non−critical Section', flush = True)
+        time.sleep(random.random())
+        print(f'{tid}−{i}: End of non−critical Section',flush = True)
         semaforo.acquire()
 
-        print(f'{tid}−{i}: Critical section')
+        print(f'{tid}−{i}: Critical section',flush = True)
         v = common.value + 1
-        print(f'{tid}−{i}: Inside critical section')
+        time.sleep(random.random())
+        print(f'{tid}−{i}: Inside critical section',flush = True)
         common.value = v
-        print(f'{tid}−{i}: End of critical section')
+        print(f'{tid}−{i}: End of critical section',flush = True)
         semaforo.release()
         
 def main():
